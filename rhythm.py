@@ -53,11 +53,12 @@ class Chart:
 class Note:
     def __init__(self, button, hold_type, pos_start, pos_end, delay=0):
         self.button = button
-        self.hold_type = hold_type
+#        self.hold_type = hold_type
         self.pos_start = pos_start
         self.pos_end = pos_end
         self.status = 0
         self.delay = 0
+        self.radius = 0
 
 #    def getText(self):
 #        return "{" + str(self.button) + ", " + str(self.hold_type) + ", " + str(self.pos_start) + ", " + str(self.pos_end) + "}"
