@@ -37,6 +37,9 @@ def mainWindow():
 
 def songSelectWindow():
     song_list = os.listdir('./Resources/Songs/')
+    done = False
+    main_screen.fill(WHITE)
+    pygame.display.flip()
 
 def songWindow():
     mychart = Chart("./Resources/Songs/Bad Apple/SampleChart.txt", 276, 11)
