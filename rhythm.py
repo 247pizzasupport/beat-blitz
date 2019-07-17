@@ -42,7 +42,7 @@ class Chart:
                     notelist = []
                     for note in fnotes:
                         fvals = note.lstrip("{").rstrip("}").split(",")
-                        my_note = Note(fvals[0], fvals[1], fvals[2], fvals[3])
+                        my_note = Note(fvals[0], int(fvals[1]), int(fvals[2]))
                         notelist.append(my_note)
                     self.chart[pos] = notelist
                 else:
@@ -51,11 +51,10 @@ class Chart:
 
 
 class Note:
-    def __init__(self, button, hold_type, pos_start, pos_end, delay=0):
+    def __init__(self, button, pos_x, pos_y, delay=0):
         self.button = button
-#        self.hold_type = hold_type
-        self.pos_start = pos_start
-        self.pos_end = pos_end
+        self.pos_x = pos_x
+        self.pos_y = pos_y
         self.status = 0
         self.delay = 0
         self.radius = 0

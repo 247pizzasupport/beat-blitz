@@ -1,7 +1,7 @@
 import time, keyboard, pygame
 from rhythm import *
 
-screen_size = (700,500)
+screen_size = (600,600)
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 GREEN    = (   0, 255,   0)
@@ -42,7 +42,7 @@ def songSelectWindow():
     pygame.display.flip()
 
 def songWindow():
-    mychart = Chart("./Resources/Songs/Bad Apple/SampleChart.txt", 276, 11)
+    mychart = Chart("./Resources/Songs/Bad Apple/Bad Apple.txt", 276, 17)
     mysong = Song("Test Song", "./Resources/Songs/Bad Apple/Bad Apple.mp3", 10, 276, mychart)
     
     note_period = 1.0/(float(mychart.bpm)/60.0)
@@ -134,26 +134,26 @@ def songWindow():
         score_text = font.render(str(my_score), True, BLACK)
         main_screen.blit(score_text, [0,0])
         for note in drawList:
-            #Remove expired notes
             if(time.time() - note.status < note_period):
                 #Animate active notes
                 time_since_start = time.time() - note.status
                 time_since_start = round(time_since_start, 2)*(1.0/note_period)
                 note.radius = int(30*time_since_start)
+            #Remove expired notes
             if(time.time() - note.status < note_period*2):
-                note_pos = note.pos_start.split("-")
                 color = RED if note.button == "A" else YELLOW if note.button == "B" else GREEN if note.button == "C" else BLUE
-                pygame.draw.circle(main_screen, BLACK, [int(note_pos[0]), 500 - int(note_pos[1])], 32)
-                pygame.draw.circle(main_screen, WHITE, [int(note_pos[0]), 500 - int(note_pos[1])], 30)
-                pygame.draw.circle(main_screen, color, [int(note_pos[0]), 500 - int(note_pos[1])], note.radius)
+                pygame.draw.circle(main_screen, BLACK, [note.pos_x, 600 - note.pos_y], 32)
+                pygame.draw.circle(main_screen, WHITE, [note.pos_x, 600 - note.pos_y], 30)
+                pygame.draw.circle(main_screen, color, [note.pos_x, 600 - note.pos_y], note.radius)
                 text = font.render(note.button, True, BLACK)
-                main_screen.blit(text, [int(note_pos[0])-8,500-int(note_pos[1])-8])
+                main_screen.blit(text, [note.pos_x-8,600-note.pos_y-8])
             else:
                 note.status = 0
                 drawList.remove(note)
         pygame.display.flip() ##refresh the display each time through the main loop?
+    pygame.mixer.music.stop()
 
-def resultsScreen():
+#def resultsScreen():
     #pass song, score, etc to this func
 
 while not done:
