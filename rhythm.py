@@ -6,37 +6,26 @@ class Song:
         self.bpm = bpm
         self.chart = chart
 
-#    def print(self):
-#        print(str(self.title) + " - " + str(self.song_length) + ", " + str(self.bpm) + " BPM")
-#        self.chart.print()
+    def songLen(self):
+        return str(self.song_length/60) + ":" + str(self.song_length%60)
 
 class Chart:
-    def __init__(self, filepath, bpm, chart_len):
+    def __init__(self, filepath, bpm):
         self.chart = {}
+        self.chart_len = 0
         self.load_chart(filepath)
-        self.chart[-1] = "-"
+        self.chart_len = self.chart_len - 1
         self.bpm = bpm
-        self.chart_len = chart_len
 
     def get_notes(self, pos):
         return self.chart[pos]
-
-#    def print(self):
-#        for i in range(0,self.chart_len+1):
-#            timing = float(i)/float(self.bpm/60)
-#            if(type(self.chart[i]) is not str):
-#                notestring = ""
-#                for note in self.chart[i]:
-#                    notestring = notestring + note.getText() + " "
-#                print(str(timing) + "s : " + notestring)
-#            else:
-#                print(str(timing) + "s : -")
 
     def load_chart(self, filepath):
         pos = 0
         with open(filepath) as f:
             ftext = f.read().splitlines()
             for line in ftext:
+                self.chart_len = self.chart_len + 1
                 if(line.rstrip('\n') != "-"):
                     fnotes = line.rstrip('\n').split("*")
                     notelist = []
@@ -51,13 +40,18 @@ class Chart:
 
 
 class Note:
-    def __init__(self, button, pos_x, pos_y, delay=0):
+    def __init__(self, button, pos_x, pos_y, delay=0, hold_type='S'):
         self.button = button
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.status = 0
-        self.delay = 0
+        self.delay = delay #Currently unused, but in the future can be used for non-quarter notes
+        self.hold_type = hold_type #Currently unused, but in the future can be used for hold notes
         self.radius = 0
 
-#    def getText(self):
-#        return "{" + str(self.button) + ", " + str(self.hold_type) + ", " + str(self.pos_start) + ", " + str(self.pos_end) + "}"
+class Result:
+    def __init__(self, result, status, pos_x, pos_y):
+        self.result = result
+        self.status = status
+        self.pos_x = pos_x
+        self.pos_y = pos_y
