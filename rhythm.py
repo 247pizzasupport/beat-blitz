@@ -13,6 +13,7 @@ class Chart:
     def __init__(self, filepath, bpm):
         self.chart = {}
         self.chart_len = 0
+        self.notes = 0
         self.load_chart(filepath)
         self.chart_len = self.chart_len - 1
         self.bpm = bpm
@@ -27,6 +28,7 @@ class Chart:
             for line in ftext:
                 self.chart_len = self.chart_len + 1
                 if(line.rstrip('\n') != "-"):
+                    self.notes = self.notes + 1
                     fnotes = line.rstrip('\n').split("*")
                     notelist = []
                     for note in fnotes:
